@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct Node {
+    char data;
+    struct Node* next;
+};
+
+
+struct Node* createLinkedList(char* name) {
+    struct Node* head = NULL;
+    struct Node* temp = NULL;
+
+    for (int i = 0; name[i] != '\0'; i++) {
+        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = name[i];
+        newNode->next = NULL;
+
+        if (head == NULL) {
+            head = newNode;
+        } else {
+            temp = head;
+            while (temp->next != NULL) {
+                temp = temp->next;
+            }
+            temp->next = newNode;
+        }
+    }
+
+    return head;
+}
+
+
+void displayReverse(struct Node* head) {
+    if (head == NULL) {
+        return;
+    }
+
+    
+    displayReverse(head->next);
+
+    // Print the current node's data (character)
+    printf("%c", head->data);
+}
+
+
+void displayList(struct Node* head) {
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%c", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    char firstName[] = "Surajit";  // Change to your first name
+
+    
+    struct Node* head = createLinkedList(firstName);
+
+    
+    printf("Original name: ");
+    displayList(head);
+
+    
+    printf("Name in reverse: ");
+    displayReverse(head);
+    printf("\n");
+
+    return 0;
+}
